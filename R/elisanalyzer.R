@@ -8,7 +8,7 @@ library(devtools)
 elisa <- read_csv("data/sample_elisa.csv")
 
 # Add the key
-key <- read.csv("~/Documents/MICRO575FinalProj/MICRO575Final/keys/key.csv")
+key <- read.csv("keys/sample_key.csv")
 
 #Take out only the data, rename columns
 ods <- elisa |>
