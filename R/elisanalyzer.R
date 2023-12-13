@@ -5,18 +5,18 @@ library(nls2)
 library(devtools)
 
 #Read the .csv file containing the data
-elisa <- read_csv("data/elisa.csv")
+elisa <- read_csv("data/sample_elisa.csv")
 
 # Add the key
-key <- read.csv("keys/key.csv")
+key <- read.csv("~/Documents/MICRO575FinalProj/MICRO575Final/keys/key.csv")
 
 #Take out only the data, rename columns
 ods <- elisa |>
   filter(row_number() %in% (24:40))
 
-new_names <- colnames(ods)[2:15] = c("row", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, "wavelength")
+colnames(ods)[2:15] = c("row", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, "wavelength")
 
-ods_2 <- select(new_names, "row":"wavelength") |>
+ods_2 <- select(ods, "row":"wavelength") |>
   relocate("wavelength", .after = row)
 
 #Fill in the N/A values in the first column
@@ -61,10 +61,8 @@ subtract_dilutent <- ods_key |>
 find_standards <- subtract_dilutent |>
   filter(type == "standard" & !is.na(standard_conc))
 
-print(find_standards)
 
 # Michaelis Menten standard curve
-
 mm_form <- formula(norm_od ~ (max.od * standard_conc) / (Km + standard_conc))
 
 mm_mod <- nls2::nls2(mm_form,
